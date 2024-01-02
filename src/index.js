@@ -1,5 +1,8 @@
 const express =require("express");
 
+// memanggil userRoutes
+const UserRoutes = require('./routes/Users')
+
 // memanggil express
 const app = express();
 
@@ -8,6 +11,9 @@ const app = express();
 // app.use("/", (req, res, next)=> {
 //     res.send('hello user')
 // })
+
+// memanggil UserRoutes
+app.use("/users", UserRoutes)
 
 // mendapatkan data
 app.get("/", (req,res) => {
