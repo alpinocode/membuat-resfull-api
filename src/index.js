@@ -17,7 +17,10 @@ app.use("/users", UserRoutes)
 
 // mendapatkan data
 app.get("/", (req,res) => {
-    res.send('hello pojan')
+    res.json({
+        nama: 'alfino hasan',
+        email: 'pojano@gmail.com'
+    })
 })
 
 // mengcreate data baru
