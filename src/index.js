@@ -10,27 +10,14 @@ const app = express();
 // membuat routing 
 // app method(path, handler)
 
-// membuat middleware
-app.use("/", MiddlewareLogRequest.logRequest)
+// merouting dari struktur project dari middleware
+app.use( MiddlewareLogRequest )
 
+// menginzinkan request body berupa JSON
+app.use(express.json())
 
 // memanggil UserRoutes
 app.use("/users", UserRoutes)
-
-// mendapatkan data
-app.get("/", (req,res) => {
-    res.json({
-        nama: 'alfino hasan',
-        email: 'pojano@gmail.com'
-    })
-})
-
-// mengcreate data baru
-app.post("/", (req,res) => {
-    res.send('hello alpin')
-})
-
-
 
 
 // membuat port 
