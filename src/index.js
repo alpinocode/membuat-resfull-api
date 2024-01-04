@@ -1,16 +1,18 @@
 const express =require("express");
-
 // memanggil userRoutes
 const UserRoutes = require('./routes/Users')
+// memanggil middleware dari file logs.js
+const MiddlewareLogRequest = require("./middleware/logs")
 
 // memanggil express
 const app = express();
 
 // membuat routing 
 // app method(path, handler)
-// app.use("/", (req, res, next)=> {
-//     res.send('hello user')
-// })
+
+// membuat middleware
+app.use("/", MiddlewareLogRequest.logRequest)
+
 
 // memanggil UserRoutes
 app.use("/users", UserRoutes)
