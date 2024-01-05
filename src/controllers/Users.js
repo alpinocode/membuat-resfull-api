@@ -1,16 +1,25 @@
+const userModels = require('../models/users')
+
 // mengampil data dari user crud menggunakan method get
-const getAllUsers = (req, res) => {
-    const data = {
-        idUser: '1',
-        nama: "Alfino Hasan",
-        email: "AlfinoHasan@gmail.com",
-        address: "Batam"
+const getAllUsers = async (req, res) => {
+    // ekspetasi yang benar
+    try {
+        // pemanggilan databases harus menggunakan asynchronous 
+        // kita haru desctructiring
+        const [data] = await userModels.getAllUsers()
+
+        res.json({
+            message: 'Get all users success',
+            data: data
+    })
+    // ini yang error
+    } catch (error) {
+        res.status(500).json({
+            message: 'Server is error',
+            serverMessage: error
+        })
     }
     
-    res.json({
-        message: 'Get all users success',
-        data: data
-    })
 }
 
 // memposting sebuah user crud menggunakan method post
