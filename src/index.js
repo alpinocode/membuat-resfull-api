@@ -24,13 +24,13 @@ app.use( MiddlewareLogRequest );
 app.use(express.json());
 
 // memanggil UserRoutes
-app.use("/users", UserRoutes);
+app.use("/users", UserRoutes)
 
 
 
 
 // membuat port 
 app.listen(PORT,()=>{
-    console.log(`Server berhasil di running${PORT}`)
+    console.log(`Server berhasil di running di ${PORT}`)
 })
 
