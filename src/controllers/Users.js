@@ -5,10 +5,10 @@ const getAllUsers = async (req, res) => {
     // ekspetasi yang benar
     try {
         // pemanggilan databases harus menggunakan asynchronous 
-        // kita haru desctructiring
+        // kita harus desctructiring
         const [data] = await userModels.getAllUsers()
 
-        res.json({
+        res.status(200).json({
             message: 'Get all users success',
             data: data
     })
@@ -23,40 +23,71 @@ const getAllUsers = async (req, res) => {
 }
 
 // memposting sebuah user crud menggunakan method post
-const createNewUser = (req, res) => {
-    console.log(req.body)
-    res.json({
-        message: 'Create new user success',
-        data: req.body
-    })
+const createNewUser = async (req, res) => {
+    // kita akan mendapatkan body dari models createUsers
+    const { body } = req
+
+    if(!body.email || !body.nama || !body.address){
+        res.status(400).json({
+            message: 'Anda kirim data yang salah',
+            data: null
+        })
+    }
+
+    try {
+        await userModels.createNewUser(body)
+        res.status(201).json({
+            message: 'Create new user success',
+            data: body
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: 'Server is error',
+            serverMessage: error
+        })
+    }
 }
 
 // update sebuah user crud menggunakan method Path 
-const updateUser = (req, res) => {
+const updateUser = async (req, res) => {
     // mendapatkan id menggunakan params
     const {idUser} = req.params
-    console.log('idUser :', idUser)
-    res.json({
-        message: 'Update data user',
-        data: req.body
-    })
+    // kita akan mendapatkan body dari models UpdateUsers
+    const {body} = req
+    try {
+        await userModels.updateUser(body, idUser)
+        res.status(201).json({
+            message: 'Update data user',
+            data: {
+                id: idUser,
+                ...body
+            }
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: 'Server is error',
+            serverMessage: error
+        })
+    }
 }
 
 // mendelete sebuah user crud menggunakan method delete
-const deleteUser = (req, res) => {
+const deleteUser = async(req, res) => {
     // mendapatkan id menggunakan params
     const {idUser} = req.params
-    console.log('idUser delete :', idUser)
-    res.json({
-        message: 'Delete user success',
-        // mengirimkan data keuser
-        data: {
-            id: idUser,
-            nama: 'alfino Hasan',
-            email: 'alfinohasan@gmail.com',
-            address: 'Batam' 
-        }
-    })
+    try {
+        await userModels.deleteUser(idUser)
+        res.status(200).json({
+            message: 'Delete user success',
+            // mengirimkan data keuser
+            data: null
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: 'Server is error',
+            serverMessage: error
+        })
+    }
 }
 
 module.exports = {

@@ -23,6 +23,8 @@ app.use( MiddlewareLogRequest );
 // menginzinkan request body berupa JSON
 app.use(express.json());
 
+
+
 // memanggil UserRoutes
 app.use("/users", UserRoutes)
 
